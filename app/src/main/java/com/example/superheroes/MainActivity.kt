@@ -1,16 +1,26 @@
 package com.example.superheroes
 
+import android.inputmethodservice.Keyboard
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.data.EmptyGroup.name
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.superheroes.model.Hero
@@ -37,18 +47,32 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun SuperheroApp(modifier: Modifier = Modifier) {
     LazyColumn {
-        items(heores) {
+        items(heroes) {
             HeroItem(hero = it)
         }
     }
 }
 
 @Composable
-fun HeroItem(hero: Hero) {
+fun HeroItem(hero: Hero, modifier: Modifier = Modifier) {
     Card() {
-
+        Row(modifier = Modifier.fillMaxWidth().padding(dimensionResource(id = 8))) {
+            Column() {
+                Text(
+                    text = stringResource(hero.nameRes),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = stringResource(hero.descriptionRes),
+                    style = MaterialTheme.typography.displayMedium
+                )
+            }
+            Image(
+                painter = painterResource(hero.imageRes),
+                contentDescription = stringResource(hero.descriptionRes)
+            )
+        }
     }
-
 }
 
 @Preview(showBackground = true)
