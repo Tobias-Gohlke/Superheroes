@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.data.EmptyGroup.name
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.superheroes.model.Hero
 import com.example.superheroes.model.HeroesRepository.heroes
@@ -34,8 +33,7 @@ class MainActivity : ComponentActivity() {
             SuperheroesTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     SuperheroApp()
                 }
@@ -56,8 +54,9 @@ fun SuperheroApp(modifier: Modifier = Modifier) {
 @Composable
 fun HeroItem(hero: Hero, modifier: Modifier = Modifier) {
     Card() {
-        Row(modifier = Modifier.fillMaxWidth().padding(dimensionResource(id = 8))) {
-            Column() {
+        Row(modifier = Modifier.fillMaxWidth()
+                        .padding(dimensionResource(R.dimen.padding_small))) {
+            Column(modifier = Modifier.weight(3f)) {
                 Text(
                     text = stringResource(hero.nameRes),
                     style = MaterialTheme.typography.bodyLarge
@@ -69,7 +68,8 @@ fun HeroItem(hero: Hero, modifier: Modifier = Modifier) {
             }
             Image(
                 painter = painterResource(hero.imageRes),
-                contentDescription = stringResource(hero.descriptionRes)
+                contentDescription = stringResource(hero.descriptionRes),
+                modifier = Modifier.weight(1f)
             )
         }
     }
@@ -77,8 +77,16 @@ fun HeroItem(hero: Hero, modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    SuperheroesTheme {
+fun HeroPreview() {
+    SuperheroesTheme(darkTheme = false) {
+        SuperheroApp()
+    }
+}
+
+@Preview
+@Composable
+fun HeroDarkThemePreview() {
+    SuperheroesTheme(darkTheme = true) {
         SuperheroApp()
     }
 }
