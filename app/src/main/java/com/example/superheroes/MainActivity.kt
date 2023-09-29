@@ -18,6 +18,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -42,6 +43,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun SuperheroApp(modifier: Modifier = Modifier) {
     LazyColumn {
@@ -53,13 +55,16 @@ fun SuperheroApp(modifier: Modifier = Modifier) {
 
 @Composable
 fun HeroItem(hero: Hero, modifier: Modifier = Modifier) {
-    Card() {
+    Card(modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_medium),
+                                    end = dimensionResource(R.dimen.padding_small),
+                                    bottom = dimensionResource(R.dimen.padding_small))
+        .clip(MaterialTheme.shapes.medium)) {
         Row(modifier = Modifier.fillMaxWidth()
                         .padding(dimensionResource(R.dimen.padding_small))) {
             Column(modifier = Modifier.weight(3f)) {
                 Text(
                     text = stringResource(hero.nameRes),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.displayLarge
                 )
                 Text(
                     text = stringResource(hero.descriptionRes),
@@ -70,6 +75,7 @@ fun HeroItem(hero: Hero, modifier: Modifier = Modifier) {
                 painter = painterResource(hero.imageRes),
                 contentDescription = stringResource(hero.descriptionRes),
                 modifier = Modifier.weight(1f)
+                    .clip(MaterialTheme.shapes.small)
             )
         }
     }
